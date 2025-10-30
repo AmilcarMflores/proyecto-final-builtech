@@ -1,0 +1,70 @@
+{% extends 'maintenance/base.html' %}
+
+{% block maintenance_content %} {% if tickets %}
+        <table class="tickets-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Prioridad</th>
+                    <th>Responsable</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Costo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket.id_mantenimiento }}</td>
+                    <td>{{ ticket.descripcion }}</td>
+                    <td>
+                        <span class="priority priority-{{ ticket.prioridad|lower }}">
+                            {{ ticket.prioridad }}
+                        </span>
+                    </td>
+                    <td>{{ ticket.responsable or 'Sin asignar' }}</td>
+                    <td>{{ ticket.fecha_ini or '-' }}</td>
+                    <td>{{ ticket.fecha_fin or '-' }}</td>
+                    <td>{{ '${:,.2f}'.format(ticket.costo) if ticket.costo else '-' }}</td>
+                    <td>
+                        {% if ticket.trabajo_realizado %}
+                            <span class="status status-completed">Completado</span>
+                        {% elif ticket.fecha_ini %}
+                            <span class="status status-in-progress">En progreso</span>
+                        {% else %}
+                            <span class="status status-pending">Pendiente</span>
+                        {% endif %}
+                    </td>
+                    <td class="actions">
+                        {% if not ticket.responsable %}
+                            <a href="{{ url_for('mantenimiento.update_ticket_ini', id=ticket.id_mantenimiento) }}" 
+                               class="btn btn-primary" title="Iniciar mantenimiento">Iniciar</a>
+                        {% elif not ticket.trabajo_realizado %}
+                            <a href="{{ url_for('mantenimiento.update_ticket_fin', id=ticket.id_mantenimiento) }}" 
+                               class="btn btn-success" title="Finalizar mantenimiento">Finalizar</a>
+                        {% endif %}
+                        
+                        <a href="{{ url_for('comunicacion.chat_ticket', ticket_id=ticket.id_mantenimiento) }}" 
+                           class="btn btn-info" title="Chat del ticket">💬</a>
+                        
+                        <a href="{{ url_for('mantenimiento.generate_ticket', id=ticket.id_mantenimiento) }}" 
+                           class="btn btn-info" title="Ver detalles">Ver</a>
+                        
+                        <form method="POST" 
+                              action="{{ url_for('mantenimiento.delete_ticket', id=ticket.id_mantenimiento) }}" 
+                              style="display:inline;" 
+                              onsubmit="return confirm('¿Está seguro de eliminar este ticket?');">
+                            <button type="submit" class="btn btn-danger" title="Eliminar ticket">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-tickets">No hay tickets de mantenimiento registrados.</p>
+    {% endif %}
+{% endblock %}

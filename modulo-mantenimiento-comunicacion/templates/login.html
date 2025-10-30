@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>{{ title }}</title>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>🏢 BuildTech App</h1>
+                <h2>Iniciar Sesión</h2>
+                <p>Bienvenido de vuelta</p>
+            </div>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="messages">
+                        {% for category, message in messages %}
+                            <div class="message {{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="post" class="auth-form">
+                <div class="field">
+                    <label for="email">Correo Electrónico</label>
+                    <div class="control">
+                        <input type="email" name="email" id="email" placeholder="tu@email.com" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="password">Contraseña</label>
+                    <div class="control">
+                        <input type="password" name="password" id="password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <button type="submit" class="button is-primary btn-block">Iniciar Sesión</button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>¿No tienes cuenta? <a href="{{ url_for('user.create_user') }}">Regístrate aquí</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

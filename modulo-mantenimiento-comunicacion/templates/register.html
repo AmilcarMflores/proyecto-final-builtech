@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>{{ title }}</title>
+</head>
+<body class="auth-body">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>🏢 BuildTech App</h1>
+                <h2>Crear Cuenta</h2>
+                <p>Únete a nuestra comunidad</p>
+            </div>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="messages">
+                        {% for category, message in messages %}
+                            <div class="message {{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="post" class="auth-form">
+                <div class="form-row">
+                    <div class="field">
+                        <label for="first_name">Nombre</label>
+                        <div class="control">
+                            <input type="text" name="first_name" id="first_name" placeholder="Juan" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="last_name">Apellido</label>
+                        <div class="control">
+                            <input type="text" name="last_name" id="last_name" placeholder="Pérez" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="email">Correo Electrónico</label>
+                    <div class="control">
+                        <input type="email" name="email" id="email" placeholder="tu@email.com" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="password">Contraseña</label>
+                    <div class="control">
+                        <input type="password" name="password" id="password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="check_password">Confirmar Contraseña</label>
+                    <div class="control">
+                        <input type="password" name="check_password" id="check_password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="role">Rol</label>
+                    <div class="control">
+                        <select name="role" id="role" required>
+                            <option value="" disabled selected>Seleccione un rol</option>
+                            <option value="user">Usuario</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <button type="submit" class="button is-primary btn-block">Registrarse</button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>¿Ya tienes cuenta? <a href="{{ url_for('user.login') }}">Inicia sesión aquí</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
