@@ -1,0 +1,45 @@
+<!-- usuarios/templates/usuarios/editar_residente.html -->
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Editar Residente{% endblock %}
+{% block section_title %}Editar Residente: {{ residente.usuario }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h5>✏️ Editar Residente</h5>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label>Usuario</label>
+        <input type="text" name="usuario" value="{{ residente.usuario }}" class="form-control" readonly>
+      </div>
+      <div class="col-md-6">
+        <label>Nombre</label>
+        <input type="text" name="nombre" value="{{ residente.nombre }}" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Apellido</label>
+        <input type="text" name="apellido" value="{{ residente.apellido }}" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>CI</label>
+        <input type="text" name="ci" value="{{ residente.ci }}" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Teléfono</label>
+        <input type="text" name="telefono" value="{{ residente.telefono }}" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Correo</label>
+        <input type="email" name="correo" value="{{ residente.correo }}" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Departamento</label>
+        <input type="number" name="departamento" value="{{ residente.departamento }}" class="form-control">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a href="{% url 'gestion_residentes' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

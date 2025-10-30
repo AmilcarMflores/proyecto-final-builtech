@@ -1,0 +1,15 @@
+<!-- usuarios/templates/usuarios/reservas_residente.html -->
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Mis Reservas{% endblock %}
+{% block section_title %}Mis Reservas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h5>📅 Mis Reservas</h5>
+  <p>Aquí se mostrarán tus reservas de áreas comunes, salones, etc.</p>
+  <div class="alert alert-info">
+    No tienes reservas activas.
+  </div>
+  <a href="#" class="btn btn-primary">Hacer nueva reserva</a>
+</div>
+{% endblock %}

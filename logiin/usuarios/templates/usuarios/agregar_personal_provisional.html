@@ -1,0 +1,40 @@
+<!-- usuarios/templates/usuarios/agregar_personal_provisional.html -->
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Agregar Personal Provisional{% endblock %}
+{% block section_title %}Agregar Personal Provisional{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label>Nombre</label>
+        <input type="text" name="nombre" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Cargo</label>
+        <input type="text" name="cargo" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Teléfono</label>
+        <input type="text" name="telefono" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Usuario</label>
+        <input type="text" name="usuario" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Contraseña</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Duración (dias)</label>
+        <input type="number" name="tiempo_validez_dias" class="form-control" day="1" value="26">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-warning">Guardar Provisional</button>
+    <a href="{% url 'gestion_personal' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

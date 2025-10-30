@@ -1,0 +1,152 @@
+[
+    {
+        "id": 1,
+        "piso": "1",
+        "puerta": "101",
+        "capacidad": 4,
+        "tipo": "3D",
+        "descripcion": "Excelente vista",
+        "estado": "disponible",
+        "propietario": "Andres illanes burgoa"
+    },
+    {
+        "id": 2,
+        "piso": 1,
+        "puerta": 102,
+        "capacidad": 2,
+        "tipo": "1D",
+        "descripcion": "Cómodo y céntrico",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 3,
+        "piso": 1,
+        "puerta": 103,
+        "capacidad": 3,
+        "tipo": "2D",
+        "descripcion": "Iluminado",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 4,
+        "piso": 2,
+        "puerta": 201,
+        "capacidad": 4,
+        "tipo": "3D",
+        "descripcion": "Amplio",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 5,
+        "piso": 2,
+        "puerta": 202,
+        "capacidad": 2,
+        "tipo": "1D",
+        "descripcion": "Buen estado",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 6,
+        "piso": 2,
+        "puerta": 203,
+        "capacidad": 3,
+        "tipo": "2D",
+        "descripcion": "Piso alto",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 7,
+        "piso": 3,
+        "puerta": 301,
+        "capacidad": 4,
+        "tipo": "3D",
+        "descripcion": "Recién remodelado",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 8,
+        "piso": 3,
+        "puerta": 302,
+        "capacidad": 2,
+        "tipo": "1D",
+        "descripcion": "Agradable",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 9,
+        "piso": 3,
+        "puerta": 303,
+        "capacidad": 3,
+        "tipo": "2D",
+        "descripcion": "Cómodo",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 10,
+        "piso": 4,
+        "puerta": 401,
+        "capacidad": 4,
+        "tipo": "3D",
+        "descripcion": "Buena distribución",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 11,
+        "piso": 4,
+        "puerta": 402,
+        "capacidad": 2,
+        "tipo": "1D",
+        "descripcion": "Cercano a ascensor",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 12,
+        "piso": 4,
+        "puerta": 403,
+        "capacidad": 3,
+        "tipo": "2D",
+        "descripcion": "Luminoso",
+        "estado": "disponible",
+        "propietario": "Terza Francisco"
+    },
+    {
+        "id": 13,
+        "piso": 5,
+        "puerta": 501,
+        "capacidad": 4,
+        "tipo": "3D",
+        "descripcion": "Terraza",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 14,
+        "piso": 5,
+        "puerta": 502,
+        "capacidad": 2,
+        "tipo": "1D",
+        "descripcion": "Vista exterior",
+        "estado": "disponible",
+        "propietario": null
+    },
+    {
+        "id": 15,
+        "piso": 5,
+        "puerta": 503,
+        "capacidad": 3,
+        "tipo": "2D",
+        "descripcion": "Tranquilo",
+        "estado": "disponible",
+        "propietario": null
+    }
+]

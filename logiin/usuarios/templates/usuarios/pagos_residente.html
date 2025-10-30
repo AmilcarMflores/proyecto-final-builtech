@@ -1,0 +1,35 @@
+<!-- usuarios/templates/usuarios/pagos_residente.html -->
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Mis Pagos{% endblock %}
+{% block section_title %}Mis Pagos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h5>💰 Mis Pagos</h5>
+  <p>Aquí se mostrarán tus pagos de servicios, mantenimiento, etc.</p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Concepto</th>
+        <th>Monto</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mantenimiento Octubre</td>
+        <td>$50.00</td>
+        <td>01/10/2025</td>
+        <td><span class="badge bg-success">Pagado</span></td>
+      </tr>
+      <tr>
+        <td>Servicios Básicos</td>
+        <td>$75.00</td>
+        <td>05/10/2025</td>
+        <td><span class="badge bg-warning">Pendiente</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+<!-- usuarios/templates/usuarios/agregar_personal.html -->
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Agregar Personal{% endblock %}
+{% block section_title %}Agregar Personal{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label>Nombre</label>
+        <input type="text" name="nombre" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Apellido</label>
+        <input type="text" name="apellido" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>CI</label>
+        <input type="text" name="ci" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Teléfono</label>
+        <input type="text" name="telefono" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Correo</label>
+        <input type="email" name="correo" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Cargo</label>
+        <input type="text" name="cargo" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Usuario</label>
+        <input type="text" name="usuario" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Contraseña</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Personal</button>
+    <a href="{% url 'gestion_personal' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

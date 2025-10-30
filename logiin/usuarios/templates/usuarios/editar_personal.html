@@ -1,0 +1,48 @@
+<!-- usuarios/templates/usuarios/editar_personal.html -->
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Editar Personal{% endblock %}
+{% block section_title %}Editar Personal: {{ p.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label>Nombre</label>
+        <input type="text" name="nombre" value="{{ p.nombre }}" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Apellido</label>
+        <input type="text" name="apellido" value="{{ p.apellido }}" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>CI</label>
+        <input type="text" name="ci" value="{{ p.ci }}" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Teléfono</label>
+        <input type="text" name="telefono" value="{{ p.telefono }}" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Correo</label>
+        <input type="email" name="correo" value="{{ p.correo }}" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label>Cargo</label>
+        <input type="text" name="cargo" value="{{ p.cargo }}" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Usuario</label>
+        <input type="text" name="usuario" value="{{ p.usuario }}" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Contraseña (dejar vacío si no cambia)</label>
+        <input type="password" name="password" class="form-control">
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Actualizar</button>
+    <a href="{% url 'gestion_personal' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

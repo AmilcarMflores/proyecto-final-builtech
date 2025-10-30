@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "usuario": "Andres",
+    "area": "Salón de Fiestas",
+    "fecha": "2025-11-15",
+    "hora_inicio": "18:00",
+    "hora_fin": "22:00",
+    "estado": "confirmada"
+  },
+  {
+    "id": 2,
+    "usuario": "Andres",
+    "area": "Piscina",
+    "fecha": "2025-10-31",
+    "hora_inicio": "10:00",
+    "hora_fin": "12:00",
+    "estado": "pendiente"
+  }
+]

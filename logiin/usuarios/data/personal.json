@@ -1,0 +1,11 @@
+[
+    {
+        "id": 1,
+        "nombre": "Andres",
+        "ci": "4270162",
+        "telefono": "77766602",
+        "cargo": "conserje",
+        "usuario": "andree",
+        "estado": "activo"
+    }
+]

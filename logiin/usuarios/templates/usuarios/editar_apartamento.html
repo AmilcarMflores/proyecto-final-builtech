@@ -1,0 +1,47 @@
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Editar Apartamento{% endblock %}
+{% block section_title %}Editar Apartamento {{ apt.puerta }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-2">
+          <label>Piso</label>
+          <input name="piso" class="form-control" value="{{ apt.piso }}">
+        </div>
+        <div class="mb-2">
+          <label>Puerta</label>
+          <input name="puerta" class="form-control" value="{{ apt.puerta }}">
+        </div>
+        <div class="mb-2">
+          <label>Capacidad</label>
+          <input name="capacidad" class="form-control" value="{{ apt.capacidad }}">
+        </div>
+        <div class="mb-2">
+          <label>Tipo</label>
+          <input name="tipo" class="form-control" value="{{ apt.tipo }}">
+        </div>
+        <div class="mb-2">
+          <label>Descripción</label>
+          <textarea name="descripcion" class="form-control">{{ apt.descripcion }}</textarea>
+        </div>
+        <div class="mb-2">
+          <label>Estado</label>
+          <select name="estado" class="form-control">
+            <option value="disponible" {% if apt.estado == 'disponible' %}selected{% endif %}>Disponible</option>
+            <option value="ocupado" {% if apt.estado == 'ocupado' %}selected{% endif %}>Ocupado</option>
+            <option value="mantenimiento" {% if apt.estado == 'mantenimiento' %}selected{% endif %}>Mantenimiento</option>
+          </select>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <a href="{% url 'gestion_apartamentos' %}" class="btn btn-secondary me-2">Cancelar</a>
+          <button class="btn btn-primary" type="submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

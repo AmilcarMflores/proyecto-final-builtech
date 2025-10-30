@@ -1,0 +1,73 @@
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Agregar Residente{% endblock %}
+{% block section_title %}Agregar Residente al Apt {{ numero }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h5>Apartamento {{ numero }}</h5>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-2">
+          <label>Usuario</label>
+          <input name="usuario" class="form-control" required>
+        </div>
+        <div class="mb-2 position-relative">
+          <label>Contraseña</label>
+          <div class="input-group">
+            <input id="id_password" type="password" name="password" class="form-control" required>
+            <button type="button" class="btn btn-outline-secondary btn-password-toggle" data-target="#id_password">👁</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label>Nombre</label>
+            <input name="nombre" class="form-control">
+          </div>
+          <div class="col">
+            <label>Apellido</label>
+            <input name="apellido" class="form-control">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <label>CI</label>
+            <input name="ci" class="form-control">
+          </div>
+          <div class="col">
+            <label>Teléfono</label>
+            <input name="telefono" class="form-control">
+          </div>
+        </div>
+        <div class="mb-2 mt-2">
+          <label>Correo</label>
+          <input name="correo" type="email" class="form-control">
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <a href="{% url 'gestion_apartamentos' %}" class="btn btn-secondary me-2">Cancelar</a>
+          <button class="btn btn-primary" type="submit">Guardar residente</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('click', function(e){
+  if(e.target && e.target.classList.contains('btn-password-toggle')){
+    const target = e.target.getAttribute('data-target');
+    const input = document.querySelector(target);
+    if(!input) return;
+    if (input.type === 'password') {
+      input.type = 'text';
+      e.target.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      e.target.textContent = '👁';
+    }
+  }
+});
+</script>
+{% endblock %}

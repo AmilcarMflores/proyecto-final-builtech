@@ -1,0 +1,26 @@
+{% extends "usuarios/base_dashboard.html" %}
+{% block section_title %}
+  Añadir Residente al Apartamento {{ apartamento.piso }}-{{ apartamento.puerta }} (Capacidad: {{ apartamento.capacidad }})
+{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <form method="post" action="{% url 'anadir_residente_departamento' numero %}">
+      {% csrf_token %}
+      <div class="row g-2">
+        <div class="col-md-6"><input name="usuario" class="form-control" placeholder="Usuario" required></div>
+        <div class="col-md-6"><input name="password" type="password" class="form-control" placeholder="Contraseña" required></div>
+        <div class="col-md-4 mt-2"><input name="nombre" class="form-control" placeholder="Nombre" required></div>
+        <div class="col-md-4 mt-2"><input name="apellido" class="form-control" placeholder="Apellido" required></div>
+        <div class="col-md-4 mt-2"><input name="ci" class="form-control" placeholder="C.I."></div>
+        <div class="col-md-4 mt-2"><input name="telefono" class="form-control" placeholder="Teléfono"></div>
+        <div class="col-md-8 mt-2"><input name="correo" class="form-control" placeholder="Correo"></div>
+      </div>
+      <div class="mt-3 text-end">
+        <a href="{% url 'gestion_apartamentos' %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Guardar residente</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Gestión de Residentes{% endblock %}
+{% block section_title %}Gestión de Residentes{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+  <h5 class="fw-bold mb-3">👥 Residentes registrados</h5>
+
+{% if residentes %}
+
+  <table class="table table-hover bg-white shadow-sm rounded">
+    <thead class="table-primary">
+      <tr>
+        <th>Usuario</th>
+        <th>Nombre completo</th>
+        <th>CI</th>
+        <th>Correo</th>
+        <th>Teléfono</th>
+        <th>Departamento</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in residentes %}
+        <tr>
+          <td>{{ r.usuario }}</td>
+          <td>{{ r.nombre }}</td>
+          <td>{{ r.ci }}</td>
+          <td>{{ r.correo }}</td>
+          <td>{{ r.telefono }}</td>
+          <td>{{ r.departamento }}</td>
+          <td>
+            <a href="{% url 'editar_residente' r.usuario %}" class="btn btn-sm btn-warning">Editar</a>
+            <a href="{% url 'borrar_residente' r.usuario %}" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este residente?');">Eliminar</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="text-muted">No hay residentes registrados aún.</p>
+  {% endif %}
+</div>
+{% endblock %}

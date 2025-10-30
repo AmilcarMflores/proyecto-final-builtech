@@ -1,0 +1,113 @@
+<!-- usuarios/templates/usuarios/dashboard_residente.html -->
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Panel del Residente{% endblock %}
+{% block section_title %}Panel del Residente{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <!-- Tarjeta de bienvenida -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center p-4">
+          <h3 class="fw-bold text-primary">👋 Bienvenido, {{ user.nombre }} {{ user.apellido }}</h3>
+          <p class="text-muted">Departamento: <strong>{{ user.departamento }}</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notificaciones -->
+  {% if total_notificaciones > 0 %}
+  <div class="row mb-4">
+    <div class="col-md-12">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-bell me-2"></i>
+        <strong>{{ total_notificaciones }} notificación{{ total_notificaciones|pluralize }} pendiente{{ total_notificaciones|pluralize }}</strong>
+        <ul class="mb-0 mt-2" style="font-size: 0.9rem;">
+          {% for n in notificaciones_pendientes %}
+            <li>{{ n.titulo }} - {{ n.mensaje }}</li>
+          {% endfor %}
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Dos columnas: Reservas + Pagos -->
+  <div class="row g-4 mb-4">
+    <!-- Próximas Reservas -->
+    <div class="col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="bi bi-calendar-check me-2"></i> Próximas Reservas</h5>
+        </div>
+        <div class="card-body">
+          {% if reservas_proximas %}
+            {% for r in reservas_proximas %}
+              <div class="border-bottom pb-2 mb-2">
+                <strong>{{ r.area }}</strong><br>
+                <small class="text-muted">
+                  {{ r.fecha }} · {{ r.hora_inicio }} - {{ r.hora_fin }}
+                </small><br>
+                <span class="badge bg-{% if r.estado == 'confirmada' %}success{% else %}warning{% endif %}">
+                  {{ r.estado|title }}
+                </span>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">No tienes reservas próximas.</p>
+          {% endif %}
+          <a href="{% url 'reservas_residente' %}" class="btn btn-outline-primary btn-sm mt-2">Ver todas</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagos Recientes -->
+    <div class="col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="bi bi-receipt me-2"></i> Pagos Recientes</h5>
+        </div>
+        <div class="card-body">
+          {% if pagos_recientes %}
+            {% for p in pagos_recientes %}
+              <div class="border-bottom pb-2 mb-2">
+                <strong>{{ p.concepto }}</strong><br>
+                <small class="text-muted">{{ p.fecha }}</small><br>
+                <span class="text-success fw-bold">${{ p.monto }}</span>
+                <span class="badge bg-{% if p.estado == 'pagado' %}success{% else %}warning{% endif %} ms-2">
+                  {{ p.estado|title }}
+                </span>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">No hay pagos registrados.</p>
+          {% endif %}
+          <a href="{% url 'pagos_residente' %}" class="btn btn-outline-success btn-sm mt-2">Ver todos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Acciones principales -->
+  <div class="row g-4">
+    <div class="col-md-4">
+      <a href="{% url 'reservas_residente' %}" class="btn btn-primary w-100 py-3">
+        <i class="bi bi-calendar-plus me-2"></i> Nueva Reserva
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'pagos_residente' %}" class="btn btn-success w-100 py-3">
+        <i class="bi bi-credit-card me-2"></i> Realizar Pago
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'cambiar_password_residente' %}" class="btn btn-secondary w-100 py-3">
+        <i class="bi bi-shield-lock me-2"></i> Cambiar Contraseña
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

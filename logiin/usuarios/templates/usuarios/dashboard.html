@@ -1,0 +1,37 @@
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Panel de Control{% endblock %}
+{% block section_title %}Panel de Control{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h5>👥 Residentes</h5>
+          <p class="text-muted small">Administra residentes registrados.</p>
+          <a href="{% url 'gestion_residentes' %}" class="btn btn-primary btn-sm">Ir</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h5>🏠 Apartamentos</h5>
+          <p class="text-muted small">Control de apartamentos.</p>
+          <a href="{% url 'gestion_apartamentos' %}" class="btn btn-primary btn-sm">Ir</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-body text-center">
+          <h5>💰 Finanzas</h5>
+          <p class="text-muted small">Gestión de pagos y gastos.</p>
+          <a href="{% url 'gestion_finanzas' %}" class="btn btn-primary btn-sm">Ir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

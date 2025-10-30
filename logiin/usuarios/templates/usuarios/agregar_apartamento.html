@@ -1,0 +1,37 @@
+{% extends "usuarios/base_dashboard.html" %}
+{% block section_title %}Añadir Apartamento{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-4 mb-2">
+          <label>Piso</label>
+          <input name="piso" type="number" class="form-control" required>
+        </div>
+        <div class="col-md-4 mb-2">
+          <label>N° Puerta</label>
+          <input name="puerta" type="text" class="form-control" required>
+        </div>
+        <div class="col-md-4 mb-2">
+          <label>Capacidad</label>
+          <input name="capacidad" type="number" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-2">
+          <label>Tipo</label>
+          <input name="tipo" type="text" class="form-control" placeholder="1D, 2D, 3D" required>
+        </div>
+        <div class="col-md-6 mb-2">
+          <label>Descripción</label>
+          <textarea name="descripcion" class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="text-end">
+        <a href="{% url 'gestion_apartamentos' %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

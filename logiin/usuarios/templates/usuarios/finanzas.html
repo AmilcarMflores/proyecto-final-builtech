@@ -1,0 +1,77 @@
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Gestión Financiera{% endblock %}
+{% block section_title %}Gestión Financiera{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <h5 class="card-title mb-3">Control Financiero del Edificio</h5>
+      <p class="text-muted">Visualiza los ingresos y egresos, así como los pagos de mantenimiento y servicios.</p>
+
+      <div class="row text-center mb-4">
+        <div class="col-md-3">
+          <div class="card bg-success text-white shadow-sm">
+            <div class="card-body">
+              <h6>Ingresos</h6>
+              <h4>Bs. 12,500</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-danger text-white shadow-sm">
+            <div class="card-body">
+              <h6>Egresos</h6>
+              <h4>Bs. 8,200</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-warning text-dark shadow-sm">
+            <div class="card-body">
+              <h6>Pendientes</h6>
+              <h4>Bs. 1,300</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-primary text-white shadow-sm">
+            <div class="card-body">
+              <h6>Balance</h6>
+              <h4>Bs. 4,300</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-striped table-bordered align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th>Fecha</th>
+            <th>Descripción</th>
+            <th>Tipo</th>
+            <th>Monto (Bs.)</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2025-10-01</td>
+            <td>Pago mantenimiento piso 3</td>
+            <td>Ingreso</td>
+            <td>350</td>
+            <td><span class="badge bg-success">Pagado</span></td>
+          </tr>
+          <tr>
+            <td>2025-10-05</td>
+            <td>Reparación ascensor</td>
+            <td>Egreso</td>
+            <td>2,000</td>
+            <td><span class="badge bg-secondary">Completado</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

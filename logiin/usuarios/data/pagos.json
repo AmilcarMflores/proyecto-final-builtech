@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "usuario": "Andres",
+    "concepto": "Mantenimiento Octubre",
+    "monto": 50.00,
+    "fecha": "2025-10-01",
+    "estado": "pagado"
+  },
+  {
+    "id": 2,
+    "usuario": "Andres",
+    "concepto": "Servicios Básicos",
+    "monto": 75.00,
+    "fecha": "2025-10-05",
+    "estado": "pendiente"
+  }
+]

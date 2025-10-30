@@ -1,0 +1,96 @@
+{% extends "usuarios/base_dashboard.html" %}
+{% load static %}
+{% block title %}Panel del Administrador{% endblock %}
+{% block section_title %}Panel del Administrador{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <!-- FILA SUPERIOR -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title text-primary fw-bold">Campo 1</h5>
+          <img id="imgCampo1" src="" alt="Imagen 1" class="img-fluid" style="max-height:180px;">
+          <p class="text-muted mt-2 small">Espacio para imagen o métrica general</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title text-success fw-bold">Campo 2</h5>
+          <img id="imgCampo2" src="" alt="Imagen 2" class="img-fluid" style="max-height:180px;">
+          <p class="text-muted mt-2 small">Espacio para imagen o estadística de residentes</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title text-warning fw-bold">Campo 3</h5>
+          <img id="imgCampo3" src="" alt="Imagen 3" class="img-fluid" style="max-height:180px;">
+          <p class="text-muted mt-2 small">Espacio para gráfico o resumen financiero</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILA MEDIA -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title text-info fw-bold">Campo 4</h5>
+          <img id="imgCampo4" src="" alt="Imagen 4" class="img-fluid" style="max-height:220px;">
+          <p class="text-muted mt-2 small">Espacio para visualizaciones adicionales o información</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title text-danger fw-bold">Campo 5</h5>
+          <img id="imgCampo5" src="" alt="Imagen 5" class="img-fluid" style="max-height:220px;">
+          <p class="text-muted mt-2 small">Espacio para comparaciones o avisos importantes</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOQUE DE PREDICCIONES -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body text-center">
+      <h4 class="fw-bold text-primary">📈 Campo de Predicciones</h4>
+      <p class="text-muted mb-3">Aquí se mostrarán resultados de predicción basados en imágenes .json (Base64)</p>
+      <div id="prediccionesContainer" class="p-3 border rounded bg-light" style="min-height:200px;">
+        <p class="text-secondary fst-italic">Esperando datos de predicción...</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Script para cargar imágenes Base64 (simulación) -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Simulación: imágenes base64 o cargadas dinámicamente
+    const imagenes = {
+      campo1: "",
+      campo2: "",
+      campo3: "",
+      campo4: "",
+      campo5: ""
+    };
+
+    Object.keys(imagenes).forEach(campo => {
+      const img = document.getElementById("img" + campo.charAt(0).toUpperCase() + campo.slice(1));
+      if (imagenes[campo]) img.src = imagenes[campo];
+    });
+  });
+</script>
+{% endblock %}

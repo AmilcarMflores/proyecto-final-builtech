@@ -1,0 +1,68 @@
+<!-- usuarios/templates/usuarios/personal.html -->
+{% extends "usuarios/base_dashboard.html" %}
+{% block title %}Gestión de Personal - BuildTech{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Gestión de Personal</h3>
+    <!-- Mostrar mensajes de Django -->
+{% if messages %}
+  {% for message in messages %} 
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+    <div>
+      <a href="{% url 'agregar_personal' %}" class="btn btn-primary me-2">+ Añadir Personal</a>
+      <a href="{% url 'agregar_personal_provisional' %}" class="btn btn-warning">⚙️ Añadir Personal Provisional</a>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      {% if personal %}
+        <table class="table table-striped align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre Completo</th>
+              <th>CI</th>
+              <th>Teléfono</th>
+              <th>Cargo</th>
+              <th>Usuario</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in personal %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ p.nombre }} {{ p.apellido }}</td>
+                <td>{{ p.ci }}</td>
+                <td>{{ p.telefono }}</td>
+                <td>{{ p.cargo }}</td>
+                <td>{{ p.usuario }}</td>
+                <td>
+                  <span class="badge {% if p.estado == 'provisional' %}bg-warning text-dark{% else %}bg-success{% endif %}">
+                    {{ p.estado|title }}
+                  </span>
+                </td>
+                <td>
+                  <a href="{% url 'editar_personal' p.id %}" class="btn btn-sm btn-warning">Editar</a>
+                  <a href="{% url 'borrar_personal' p.id %}" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este personal?');">Eliminar</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="text-muted">No hay personal registrado aún.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

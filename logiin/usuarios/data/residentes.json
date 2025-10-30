@@ -1,0 +1,24 @@
+[
+    {
+        "usuario": "Andres",
+        "password": "Andres123.",
+        "rol": "residente",
+        "nombre": "Andres",
+        "apellido": "illanes burgoa",
+        "ci": "4270162",
+        "telefono": "77766602",
+        "correo": "Andres@gmail.com",
+        "departamento": 1
+    },
+    {
+        "usuario": "tere",
+        "password": "12345678",
+        "rol": "residente",
+        "nombre": "Terza",
+        "apellido": "Francisco",
+        "ci": "4270102",
+        "telefono": "71500377",
+        "correo": "techita@gmail.com",
+        "departamento": 12
+    }
+]

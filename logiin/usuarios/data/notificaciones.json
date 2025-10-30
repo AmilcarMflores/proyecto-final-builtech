@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "usuario": "Andres",
+    "titulo": "Mantenimiento programado",
+    "mensaje": "El ascensor estará en mantenimiento el 5/11.",
+    "fecha": "2025-10-28",
+    "leida": false
+  },
+  {
+    "id": 2,
+    "usuario": "Andres",
+    "titulo": "Recordatorio de pago",
+    "mensaje": "Tu pago de servicios vence en 2 días.",
+    "fecha": "2025-10-29",
+    "leida": false
+  }
+]

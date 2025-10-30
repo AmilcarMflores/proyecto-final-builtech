@@ -1,0 +1,27 @@
+[
+    {
+        "usuario": "admin",
+        "password": "Manuel123.",
+        "rol": "administrador",
+        "nombre": "Manuel Angel Illanes Francisco",
+        "correo": "many211001@gmail.com",
+        "telefono": "61134775",
+        "must_change_password": false
+    },
+    {
+        "usuario": "Andres",
+        "password": "Andres123.",
+        "rol": "residente",
+        "nombre": "Andres illanes burgoa",
+        "correo": "Andres@gmail.com",
+        "must_change_password": false
+    },
+    {
+        "usuario": "tere",
+        "password": "12345678",
+        "rol": "residente",
+        "nombre": "Terza Francisco",
+        "correo": "techita@gmail.com",
+        "must_change_password": false
+    }
+]
