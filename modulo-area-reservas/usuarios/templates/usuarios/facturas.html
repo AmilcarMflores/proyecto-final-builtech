@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facturas - BuildTech</title>
+    
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f9;
+            color: #333;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .financial-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .balance-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+        }
+
+        .balance-card h3 {
+            margin-top: 0;
+            color: #1e3a8a;
+            font-size: 16px;
+        }
+
+        .debt-amount {
+            font-size: 32px;
+            color: #dc2626; 
+            font-weight: bold;
+            margin: 5px 0 10px 0;
+        }
+
+        .paid-amount {
+            font-size: 24px;
+            color: #16a34a;
+            font-weight: bold;
+            margin: 5px 0 10px 0;
+        }
+
+        .pay-button {
+            background-color: #f59e0b; 
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .pay-button:hover {
+            background-color: #d97706;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        th {
+            background-color: #e5e7eb;
+            color: #374151;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .status-pendiente {
+            color: #f59e0b; 
+            font-weight: bold;
+        }
+        .status-pagada {
+            color: #16a34a; 
+            font-weight: bold;
+        }
+        .status-vencida {
+            color: #dc2626; 
+            font-weight: bold;
+            background-color: #fee2e2;
+        }
+
+        .view-link {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .view-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <div class="financial-header">
+            <h2>Gestión de Facturas y Pagos</h2>
+            <div class="balance-card">
+                <h3>Saldo Pendiente Total:</h3>
+                {% if monto_pendiente > 0 %}
+                    <p class="debt-amount">${{ monto_pendiente|floatformat:2 }}</p>
+                    <button class="pay-button">Realizar Pago Ahora</button>
+                {% else %}
+                    <p class="paid-amount">¡Al día! $0.00</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <p>Aquí puedes revisar el historial de todas tus facturas, el detalle de los costos (servicios, reservas, etc.) y los pagos aplicados.</p>
+
+        {% if facturas_usuario %}
+            <div class="data-section">
+                <h3>Historial de Facturas</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Emisión</th>
+                            <th>Monto Total</th>
+                            <th>Estado</th>
+                            <th>Descripcion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for factura in facturas_usuario %}
+                        <tr class="{% if factura.estado == 'vencida' %}vencida{% elif factura.estado == 'pagada' %}pagada{% else %}pendiente{% endif %}">
+                            <td>{{ factura.id_factura }}</td>
+                            <td>{{ factura.fecha_emision|date:"d M Y" }}</td>
+                            <td>${{ factura.monto_total|floatformat:2 }}</td>
+                            <td class="status-{{ factura.estado|lower }}">
+                                {{ factura.estado|capfirst }}
+                            </td>
+                            <td>{{ factura.descripcion }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="no-data">
+                <p>No tienes facturas registradas en tu historial.</p>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

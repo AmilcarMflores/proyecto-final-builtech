@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservas - BUILDTECH</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f8fb;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1e3a8a;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+        }
+
+        .reserva-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .reserva-container h2 {
+            text-align: center;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        .reserva-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .reserva-container input,
+        .reserva-container select {
+            width: 100%;
+            padding: 8px 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Botones alineados */
+        .botones-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .botones-container button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-editar {
+            background-color: #f59e0b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn-editar:hover { background-color: #d97706; }
+
+        .btn-eliminar {
+            background-color: #ef4444;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn-eliminar:hover { background-color: #b91c1c; }
+
+        .btn-reservar { background-color: #1e3a8a; color: white; }
+        .btn-reservar:hover { background-color: #2563eb; }
+
+        .btn-cancelar { background-color: #d1d5db; color: #111827; }
+        .btn-cancelar:hover { background-color: #9ca3af; }
+
+        .btn-ver { background-color: #10b981; color: white; }
+        .btn-ver:hover { background-color: #059669; }
+
+        /* Estilos calendario */
+        .flatpickr-calendar { font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        #fecha_res { margin: 0 auto 30px auto; text-align: center; font-weight: bold; }
+        .flatpickr-inline { display: flex; justify-content: center; margin-bottom: 40px; }
+        .btn-avisos { 
+            background-color: #3b82f6; 
+            color: white; 
+            padding: 5px 10px; 
+            border-radius: 5px; 
+            text-decoration: none;
+            border: none; /* Asegurar que no tenga borde de botón por defecto */
+        }
+        .btn-avisos:hover { background-color: #2563eb; }
+    </style>
+</head>
+<body>
+    <div class="header">BUILDTECH - Reservas</div>
+
+    <div class="reserva-container">
+        <h2>Reservar Área Común</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="area">Área a reservar:</label>
+            <select id="area" name="id_area" required>
+                <option value="">Seleccione un área</option>
+                {% for area in areas %}
+                    <option value="{{ area.id_area }}">{{ area.nombre }}</option>
+                {% endfor %}
+            </select>
+
+            <div id="tipo-reserva-container" style="display:none;">
+                <label for="tipo_reserva">Tipo de reserva:</label>
+                <select id="tipo_reserva" name="tipo_reserva">
+                    <option value="dia">Por día</option>
+                    <option value="mes">Por mes</option>
+                </select>
+            </div>
+
+            <label for="fecha_res">Fecha:</label>
+            <input type="text" id="fecha_res" name="fecha_res" placeholder="Seleccionar fecha" required>
+
+            <div id="horarios-container">
+                <label for="hora_ini">Hora de inicio:</label>
+                <select id="hora_ini" name="hora_ini" required>
+                    <option value="">Seleccione una hora</option>
+                </select>
+
+                <label for="duracion">Duración (horas):</label>
+                <input type="number" id="duracion" name="duracion" min="1" required>
+
+                <label for="numero_personas">Número de personas (opcional):</label>
+                <input type="number" id="numero_personas" name="numero_personas" min="1">
+            </div>
+
+            <div class="botones-container">
+                <button type="submit" class="btn-reservar">Reservar</button>
+                <button type="button" class="btn-ver" id="btn-ver-reservas">Ver reservas</button>
+            </div>
+            <div id="tabla-reservas" style="display:none; margin-top:30px;">
+                {% if reservas_usuario %}
+                    <h3 style="color:#1e3a8a;">Mis Reservas</h3>
+                    <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+                        <thead>
+                            <tr style="background-color: #1e3a8a; color: white;">
+                                <th>Área</th>
+                                <th>Fecha</th>
+                                <th>Hora Inicio</th>
+                                <th>Duración (hrs)</th>
+                                <th>Estado</th>
+                                <th>Acciones</th> <!-- nueva columna -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in reservas_usuario %}
+                            <tr style="border-bottom:1px solid #ccc; text-align:center;">
+                                <td style="padding:10px;">{{ r.id_area.nombre }}</td>
+                                <td style="padding:10px;">{{ r.fecha_res }}</td>
+                                <td style="padding:10px;">{{ r.hora_ini|time:"H:i" }}</td>
+                                <td style="padding:10px;">{{ r.duracion }}</td>
+                                <td style="padding:10px;">{{ r.estado }}</td>
+                                <td style="padding:10px; display:flex; justify-content:center;align-items:center; gap:5px;">
+                                    <button type="button" 
+                                            class="btn-editar open-edit-modal"
+                                            data-id="{{ r.id_reserva }}"
+                                            data-fecha="{{ r.fecha_res|date:'Y-m-d' }}"
+                                            data-hora="{{ r.hora_ini|time:'H:i' }}"
+                                            data-duracion="{{ r.duracion }}"
+                                            data-personas="{{ r.numero_personas|default:'' }}">
+                                        Editar
+                                    </button>
+                                    <button type="button" class="btn-avisos" data-reserva-id="{{ r.id_reserva }}">Avisos</button>
+                                    <a href="{% url 'eliminar_reserva' r.id_reserva %}" class="btn-eliminar" onclick="return confirm('¿Seguro que deseas eliminar esta reserva?');">Eliminar</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <div id="avisos-modal" style="
+                                display:none; /* Oculto por defecto */
+                                position: fixed; 
+                                z-index: 1000; 
+                                left: 0; 
+                                top: 0; 
+                                width: 100%; 
+                                height: 100%; 
+                                overflow: auto; 
+                                background-color: rgba(0,0,0,0.4);">
+                                
+                                <div style="
+                                    background-color: #fefefe; 
+                                    margin: 15% auto; /* Centrado */
+                                    padding: 20px; 
+                                    border: 1px solid #888; 
+                                    width: 80%; 
+                                    max-width: 400px;
+                                    border-radius: 8px;">
+                                    
+                                    <span class="close-btn" style="
+                                        color: #aaa;
+                                        float: right;
+                                        font-size: 28px;
+                                        font-weight: bold;
+                                        cursor: pointer;">&times;</span>
+                                        
+                                    <h3 style="color:#1e3a8a;">Avisos para Reserva <span id="modal-reserva-id"></span></h3>
+                                    <div id="modal-content">
+                                        <p>Aquí se mostrarían los avisos o detalles de la reserva seleccionada.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </tbody>
+
+                    </table>
+                {% else %}
+                    <p>No tienes reservas aún.</p>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <div id="edit-modal" style="
+        display:none; 
+        position: fixed; 
+        z-index: 1000; 
+        left: 0; 
+        top: 0; 
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgba(0,0,0,0.4);">
+        
+        <div style="
+            background-color: #fefefe; 
+            margin: 10% auto;
+            padding: 20px; 
+            border: 1px solid #888; 
+            width: 90%; 
+            max-width: 500px;
+            border-radius: 8px;">
+            
+            <span class="close-edit-modal" style="
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+                cursor: pointer;">&times;</span>
+                
+            <h3 style="color:#1e3a8a;">Editar Reserva #<span id="edit-reserva-id"></span></h3>
+            
+            <form method="post" id="edit-form">
+                {% csrf_token %}
+                <label for="edit_fecha_res">Fecha:</label>
+                <input type="date" id="edit_fecha_res" name="fecha_res" required>
+
+                <label for="edit_hora_ini">Hora de inicio:</label>
+                <input type="time" id="edit_hora_ini" name="hora_ini" required>
+
+                <label for="edit_duracion">Duración (horas):</label>
+                <input type="number" id="edit_duracion" name="duracion" min="1" required>
+
+                <label for="edit_numero_personas">Número de personas (opcional):</label>
+                <input type="number" id="edit_numero_personas" name="numero_personas" min="1">
+                
+                <div class="botones-container" style="margin-top: 20px;">
+                    <button type="submit" class="btn-reservar" style="flex: 0 1 100%;">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        let calendario;
+        const areaSelect = document.getElementById("area");
+        const horaSelect = document.getElementById("hora_ini");
+        const tipoReservaContainer = document.getElementById("tipo-reserva-container");
+        const horariosContainer = document.getElementById("horarios-container");
+
+        function cargarHorarios(area_id, fecha) {
+            fetch(`/horarios_disponibles/${area_id}/?fecha=${fecha}`)
+                .then(response => response.json())
+                .then(data => {
+                    horaSelect.innerHTML = '<option value="">Seleccione una hora</option>';
+                    if (data.length === 0) {
+                        const opt = document.createElement("option");
+                        opt.text = "No hay horarios disponibles";
+                        horaSelect.appendChild(opt);
+                        return;
+                    }
+                    data.forEach(hora => {
+                        const opt = document.createElement("option");
+                        opt.value = hora;
+                        opt.text = hora;
+                        horaSelect.appendChild(opt);
+                    });
+                });
+        }
+
+        areaSelect.addEventListener("change", () => {
+            const areaNombre = areaSelect.options[areaSelect.selectedIndex].text.toLowerCase();
+
+            if (areaNombre === "parqueo") {
+                tipoReservaContainer.style.display = "block";
+                horariosContainer.style.display = "none";
+                document.getElementById("hora_ini").required = false;
+                document.getElementById("duracion").required = false;
+            } else {
+                tipoReservaContainer.style.display = "none";
+                horariosContainer.style.display = "block";
+                document.getElementById("hora_ini").required = true;
+                document.getElementById("duracion").required = true;
+            }
+
+            // Cargar calendario
+            fetch(`/fechas_ocupadas/${areaSelect.value}/`)
+                .then(res => res.json())
+                .then(data => {
+                    if (calendario) calendario.destroy();
+                    calendario = flatpickr("#fecha_res", {
+                        dateFormat: "Y-m-d",
+                        minDate: "today",
+                        locale: "es",
+                        inline: true,
+                        disable: data,
+                        onChange: function(selectedDates, dateStr) {
+                            if (areaNombre !== "parqueo" && areaSelect.value) {
+                                cargarHorarios(areaSelect.value, dateStr);
+                            }
+                        }
+                    });
+                });
+        });
+        const btnVerReservas = document.getElementById("btn-ver-reservas");
+        const tablaReservas = document.getElementById("tabla-reservas");
+
+        btnVerReservas.addEventListener("click", () => {
+            if (tablaReservas.style.display === "none") {
+                tablaReservas.style.display = "block";  // Mostrar tabla
+                btnVerReservas.textContent = "Ocultar reservas"; // Cambiar texto del botón
+            } else {
+                tablaReservas.style.display = "none";   // Ocultar tabla
+                btnVerReservas.textContent = "Ver reservas"; 
+            }
+        });
+        // CÓDIGO JAVASCRIPT AÑADIDO/MODIFICADO
+
+        // ... (código JavaScript existente) ...
+
+        const avisosModal = document.getElementById("avisos-modal");
+        const closeBtn = document.querySelector(".close-btn");
+        const modalReservaId = document.getElementById("modal-reserva-id");
+        const btnsAvisos = document.querySelectorAll(".btn-avisos");
+
+
+        // Función para abrir el modal
+        btnsAvisos.forEach(button => {
+            button.addEventListener("click", function() {
+                const reservaId = this.getAttribute('data-reserva-id');
+                modalReservaId.textContent = "#" + reservaId; // Muestra el ID de la reserva en el modal
+                avisosModal.style.display = "block"; // Muestra el modal
+            });
+        });
+
+        // Función para cerrar el modal al hacer click en (x)
+        closeBtn.addEventListener("click", function() {
+            avisosModal.style.display = "none";
+        });
+
+        // Función para cerrar el modal al hacer click fuera de él
+        window.addEventListener("click", function(event) {
+            if (event.target === avisosModal) {
+                avisosModal.style.display = "none";
+            }
+        });
+        // CÓDIGO JAVASCRIPT AÑADIDO/MODIFICADO
+
+        // ... (variables y listeners existentes) ...
+
+        // Nuevas variables para el modal de edición
+        const editModal = document.getElementById("edit-modal");
+        const closeEditBtn = document.querySelector(".close-edit-modal");
+        const openEditBtns = document.querySelectorAll(".open-edit-modal"); // Selector del botón Editar
+
+        const editForm = document.getElementById("edit-form");
+        const editReservaId = document.getElementById("edit-reserva-id");
+        const editFechaInput = document.getElementById("edit_fecha_res");
+        const editHoraInput = document.getElementById("edit_hora_ini");
+        const editDuracionInput = document.getElementById("edit_duracion");
+        const editPersonasInput = document.getElementById("edit_numero_personas");
+
+        // Lógica para abrir el modal de edición y cargar datos
+        openEditBtns.forEach(button => {
+            button.addEventListener("click", function() {
+                const id = this.getAttribute('data-id');
+                const fecha = this.getAttribute('data-fecha');
+                const hora = this.getAttribute('data-hora');
+                const duracion = this.getAttribute('data-duracion');
+                const personas = this.getAttribute('data-personas');
+
+                // 1. Llenar los campos del formulario
+                editReservaId.textContent = id;
+                editFechaInput.value = fecha;
+                // La hora debe tener formato HH:MM
+                editHoraInput.value = hora.substring(0, 5); 
+                editDuracionInput.value = duracion;
+                editPersonasInput.value = personas;
+                
+                // 2. Establecer el action del formulario (ruta Django)
+                // Reemplaza 'editar_reserva' con el nombre de tu URL si es diferente
+                editForm.action = `/editar-reserva/${id}/`; 
+
+                // 3. Mostrar el modal
+                editModal.style.display = "block"; 
+            });
+        });
+
+        // Lógica para cerrar el modal de edición con la (x)
+        closeEditBtn.addEventListener("click", function() {
+            editModal.style.display = "none";
+        });
+
+        // Lógica para cerrar el modal de edición al hacer click fuera de él
+        window.addEventListener("click", function(event) {
+            if (event.target === editModal) {
+                editModal.style.display = "none";
+            }
+        });
+
+        // ... (Resto del código JavaScript existente, incluido el modal de Avisos) ...
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio - Sistema Edificio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f8fb;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1e3a8a; /* barra azul */
+            padding: 10px 20px;
+            color: white;
+            position: relative;
+        }
+
+        /* Logo en círculo */
+        .logo-circle {
+            background-color: #ffffff; /* fondo del círculo */
+            width: 60px;
+            height: 60px;
+            border-radius: 50%; /* círculo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3); /* sombra opcional */
+        }
+
+        .logo-circle img {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        /* Título centrado */
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            text-align: center;
+            flex-grow: 1;
+            color: #ffffff;
+        }
+
+        /* Barra lateral */
+        .sidebar {
+            position: fixed;
+            top: 80px; /* altura real del header */
+            left: 0;
+            width: 200px;
+            height: calc(100vh - 80px); /* ocupa el resto de la pantalla */
+            background-color: #3b82f6;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #2563eb; /* azul más oscuro al pasar el mouse */
+        }
+
+        /* Contenido */
+        .content {
+            margin-left: 220px; /* espacio por el sidebar */
+            padding: 20px;
+        }
+
+        .content h2 {
+            color: #1e3a8a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Encabezado con logos y título -->
+    <div class="header">
+        <div class="logo-circle">
+            <img src="{% static 'usuarios/logo.jpeg' %}" alt="Logo Izquierdo">
+        </div>
+
+        <h1>BUILDTECH</h1>
+
+        <!-- Logo derecho en círculo -->
+        <div class="logo-circle">
+            <img src="{% static 'usuarios/aaa.png' %}" alt="Logo Derecho">
+        </div>     
+    </div>
+
+    <!-- Barra lateral -->
+    <div class="sidebar">
+        <a href="{% url 'login' %}">Iniciar Sesión</a>
+        <a href="{% url 'modulo_financiero' %}">Financiera</a>
+        <a href="{% url 'reservas' %}">Reservas</a>
+        <a href="{% url 'facturas' %}">Facturas</a>
+        <a href="{% url 'logout' %}">Cerrar Sesión</a>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content">
+        <h2>Bienvenido al Sistema del Edificio</h2>
+        <p>Selecciona una opción en el menú lateral.</p>
+    </div>
+</body>
+</html>

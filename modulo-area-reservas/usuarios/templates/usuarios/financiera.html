@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Módulo Financiero - BUILDTECH</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f8fb;
+            color: #333;
+        }
+        h1, h2 {
+            color: #1e3a8a;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #e0f2fe; /* Azul claro para encabezados */
+            color: #1e3a8a;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .btn-pagar {
+            background-color: #10b981; /* Verde */
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-pagar:hover {
+            background-color: #059669;
+        }
+        .mantenimiento-resumen {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 40px;
+        }
+        .mantenimiento-resumen p {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #3b82f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-ver-detalle {
+            background-color: #f59e0b; /* Amarillo */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-ver-detalle:hover {
+            background-color: #d97706;
+        }
+        .detalle-mantenimiento {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+            display: none; /* Inicialmente oculto */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Módulo Financiero 💰</h1>
+        <p><a href="{% url 'home' %}">← Volver al Inicio</a></p>
+
+        <h2>Salarios Pendientes de Personal</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Fecha Ingreso</th>
+                    <th>Monto Adeudado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in personal %}
+                <tr>
+                    <td>{{ p.nombre }}</td>
+                    <td>{{ p.apellido }}</td>
+                    <td>{{ p.fecha_ingreso|date:"d M Y" }}</td>
+                    <td>${{ p.monto_adeudado|floatformat:2 }}</td>
+                    <td>
+                        <form method="post" action="{% url 'pagar_personal' p.id_personal %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-pagar">Pagar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No hay personal registrado o salarios pendientes.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Costos de Mantenimiento 🛠️</h2>
+
+        <div class="mantenimiento-resumen">
+            <p>
+                <span>Costo Total de Mantenimiento Acumulado:</span>
+                <span>${{ total_costo_mantenimiento|floatformat:2 }}</span>
+            </p>
+            <button class="btn-ver-detalle" onclick="toggleDetalle()">Ver Detalle de Mantenimientos</button>
+        </div>
+
+        <div class="detalle-mantenimiento" id="detalleMantenimiento">
+            <h3>Lista de Mantenimientos Realizados</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Costo</th>
+                        <th>Fecha Inicio</th>
+                        <th>Personal a Cargo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in mantenimientos %}
+                    <tr>
+                        <td>{{ m.tipo|capfirst }}</td>
+                        <td>${{ m.costo|floatformat:2 }}</td>
+                        <td>{{ m.fecha_ini|date:"d M Y" }}</td>
+                        <td>{{ m.personal.nombre }} {{ m.personal.apellido }}</td>
+                        <td>{{ m.descripcion|default:"N/A" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No hay registros de mantenimientos.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetalle() {
+            var detalle = document.getElementById("detalleMantenimiento");
+            var boton = document.querySelector(".btn-ver-detalle");
+            if (detalle.style.display === "none" || detalle.style.display === "") {
+                detalle.style.display = "block";
+                boton.textContent = "Ocultar Detalle de Mantenimientos";
+            } else {
+                detalle.style.display = "none";
+                boton.textContent = "Ver Detalle de Mantenimientos";
+            }
+        }
+    </script>
+</body>
+</html>

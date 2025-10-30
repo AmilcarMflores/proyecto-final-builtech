@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e3f2fd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            color: #1976d2;
+            margin-top: 0; /* Asegura que el h2 no tenga margen superior */
+        }
+        input, button {
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box; /* Importante para que el padding no cambie el width */
+        }
+        button {
+            background-color: #1976d2;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1565c0;
+        }
+
+        /* ESTILOS AÑADIDOS PARA MOSTRAR MENSAJES */
+        .message {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .error {
+            background-color: #f8d7da; /* Rojo claro */
+            color: #721c24; /* Texto rojo oscuro */
+            border: 1px solid #f5c6cb;
+        }
+        .success {
+            background-color: #d4edda; /* Verde claro */
+            color: #155724; /* Texto verde oscuro */
+            border: 1px solid #c3e6cb;
+        }
+        /* Fin de estilos añadidos */
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <h2>Iniciar Sesión</h2>
+        <input type="text" name="username" placeholder="Usuario" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+        <button type="submit">Ingresar</button>
+        <p style="text-align:center;">
+            <a href=>¿No tienes cuenta? Regístrate</a>
+        </p>
+    </form>
+</body>
+</html>
